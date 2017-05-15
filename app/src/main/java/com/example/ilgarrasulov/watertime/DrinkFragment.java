@@ -30,7 +30,8 @@ public class DrinkFragment extends Fragment {
     private Calendar cal= Calendar.getInstance(Locale.ENGLISH);
     private TextView today_stats;
     private CardView wellDone;
-    private LinearLayout details_group;
+    private CardView details_group;
+    private LinearLayout details_group_layout;
 
 
     @Nullable
@@ -59,13 +60,19 @@ public class DrinkFragment extends Fragment {
 
         updateTodayStats();
 
-        details_group=(LinearLayout)v.findViewById(R.id.details_group);
-        details_group.setOnClickListener(new View.OnClickListener() {
+
+        View.OnClickListener listener=new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(),"Wow!",Toast.LENGTH_SHORT).show();
             }
-        });
+        };
+
+        details_group=(CardView)v.findViewById(R.id.drink_tab_card_view_drank_today);
+        details_group.setOnClickListener(listener);
+
+        details_group_layout=(LinearLayout)v.findViewById(R.id.details_group);
+        details_group_layout.setOnClickListener(listener);
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

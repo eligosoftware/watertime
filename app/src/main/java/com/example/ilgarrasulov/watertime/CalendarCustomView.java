@@ -46,7 +46,7 @@ public class CalendarCustomView extends LinearLayout {
         super(context, attrs);
         this.context=context;
         initializeUILayout();
-        setUpCalendarAdapter();
+        setUpCalendarAdapter(null);
         setPreviousButtonClickEvent();
         setNextButtonClickEvent();
         setGridCellClickEvents();
@@ -70,7 +70,7 @@ public class CalendarCustomView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 cal.add(Calendar.MONTH,-1);
-                setUpCalendarAdapter();
+                setUpCalendarAdapter(null);
             }
         });
     }
@@ -79,12 +79,12 @@ public class CalendarCustomView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 cal.add(Calendar.MONTH,1);
-                setUpCalendarAdapter();
+                setUpCalendarAdapter(null);
             }
         });
     }
 
-    private void setUpCalendarAdapter(){
+    private void setUpCalendarAdapter(Calendar tapped_date){
         List<Date> dayValueInCells=new ArrayList<Date>();
         Calendar mCal=(Calendar)cal.clone();
         mCal.set(Calendar.DAY_OF_MONTH,1);
@@ -107,6 +107,11 @@ public class CalendarCustomView extends LinearLayout {
         String sDate = formatter.format(cal.getTime());
         currentDate.setText(sDate);
         mAdapter=new GridAdapter(context,dayValueInCells,cal,calendarDays);
+
+        if(tapped_date!=null){
+            mAdapter.setTapped_position(tapped_date,false);
+        }
+
         calendarGridView.setAdapter(mAdapter);
     }
     private void setGridCellClickEvents(){
@@ -121,14 +126,14 @@ public class CalendarCustomView extends LinearLayout {
                 if (cal.get(Calendar.YEAR) == cal1.get(Calendar.YEAR)) {
                     if (cal.get(Calendar.MONTH) < cal1.get(Calendar.MONTH)) {
                         cal.add(Calendar.MONTH, 1);
-                        setUpCalendarAdapter();
+                        setUpCalendarAdapter(cal1);
                     } else if (cal.get(Calendar.MONTH) > cal1.get(Calendar.MONTH)) {
                         cal.add(Calendar.MONTH, -1);
-                        setUpCalendarAdapter();
+                        setUpCalendarAdapter(cal1);
                     }
 
                     else {
-                        ((GridAdapter) calendarGridView.getAdapter()).setTapped_position(position);
+                        ((GridAdapter) calendarGridView.getAdapter()).setTapped_position(cal1,true);
                         calendarGridView.invalidate();
                         //Toast.makeText(context,"Clicked "+calendarGridView.getAdapter().getItem(position).toString(),Toast.LENGTH_LONG).show();
                     }
@@ -136,10 +141,10 @@ public class CalendarCustomView extends LinearLayout {
                 }
                     else if (cal.get(Calendar.YEAR) < cal1.get(Calendar.YEAR)) {
                         cal.add(Calendar.MONTH, 1);
-                        setUpCalendarAdapter();
+                        setUpCalendarAdapter(cal1);
                     } else {
                         cal.add(Calendar.MONTH, -1);
-                        setUpCalendarAdapter();
+                        setUpCalendarAdapter(cal1);
                     }
                 }
 

@@ -20,12 +20,14 @@ import java.util.Locale;
  * Created by ilgarrasulov on 12.05.2017.
  */
 public class GridAdapter extends ArrayAdapter {
-    public void setTapped_position(Integer tapped_position) {
+    public void setTapped_position(Calendar tapped_position,boolean notify) {
         this.tapped_position = tapped_position;
-        this.notifyDataSetChanged();
+        if(notify) {
+            this.notifyDataSetChanged();
+        }
     }
 
-    private Integer tapped_position;
+    private Calendar tapped_position;
     private List<Date> monthlyDates;
     private Calendar currentDate;
     private List<CalendarDay> calendarDays;
@@ -92,7 +94,10 @@ public class GridAdapter extends ArrayAdapter {
 
         }
 
-        if(tapped_position!=null && tapped_position==position){
+        if(tapped_position!=null && (tapped_position.get(Calendar.MONTH)+1==displayMonth && tapped_position.get(Calendar.DAY_OF_MONTH)==dayValue
+        && tapped_position.get(Calendar.YEAR)==displayYear
+        )){
+
             if (displayMonth == currentMonth && displayYear == currentYear) {
             view.setBackground(getContext().getResources().getDrawable(R.drawable.green_border_in_month));
             }else{
