@@ -1,5 +1,6 @@
 package com.example.ilgarrasulov.watertime;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -64,7 +65,12 @@ public class DrinkFragment extends Fragment {
         View.OnClickListener listener=new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"Wow!",Toast.LENGTH_SHORT).show();
+
+                List<DrinkGlass> drinkGlasses=databaseQuery.getDrinkGlasses(cal.getTime());
+
+                startActivity(DrinksListActivity.newInstance(drinkGlasses,getActivity()));
+
+              //  Toast.makeText(getActivity(),"Wow!",Toast.LENGTH_SHORT).show();
             }
         };
 

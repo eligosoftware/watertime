@@ -26,6 +26,25 @@ public class DatabaseQuery extends DatabaseObject {
     private Calendar calendar=Calendar.getInstance(Locale.ENGLISH);
 
 
+    public List<DrinkGlass> getDrinkGlasses(Date date){
+        List<DrinkGlass> drinkGlasses=new ArrayList<>();
+        String dateString=sdf.format(date);
+
+        String query="select "+DBSchema.DrinkTimes.DATE_TIME +", _id"+
+
+                " from "+DBSchema.DrinkTimes.NAME
+                +" where date("+DBSchema.DrinkTimes.DATE_TIME+") = "+dateString
+                ;
+        Cursor cursor= getDBConnection().rawQuery(query,null);
+        if (cursor.moveToFirst()){
+            do{
+                drinkGlasses.add(new DrinkGlass(cursor.getLong(cursor.getColumnIndex("_id")),convertStringToDate(cursor.getString(cursor.getColumnIndex(DBSchema.DrinkTimes.DATE_TIME)),sdf_full)));
+            } while (cursor.moveToNext());
+        }
+        return drinkGlasses;
+    }
+
+
     public List<CalendarDay> getAllDrinks(Date dateBegin, Date dateEnd) {
         List<CalendarDay> calendarDays=new ArrayList<>();
 
