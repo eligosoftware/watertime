@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        DatabaseQuery dq=new DatabaseQuery(this);
+        dq.registerForToday();
+
 //        String[] permissions = new String[]{
 //        Manifest.permission.READ_CALENDAR,
 //                Manifest.permission.WRITE_CALENDAR};

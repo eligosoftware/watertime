@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:padding="8dp">
+    <TextView
+        android:id="@+id/calendar_date_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        
+        />
+    <LinearLayout
+        android:id="@+id/event_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:visibility="gone"
+            android:src="@mipmap/ic_ok"
+            android:id="@+id/event_id"
+            android:layout_width="16dp"
+            android:layout_height="16dp"/>
+
+    </LinearLayout>
+</LinearLayout>
