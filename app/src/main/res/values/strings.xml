@@ -18,4 +18,8 @@
     <string name="today_drinks">Today drinks</string>
     <string name="at_str">At %s</string>
     <string name="day_stats">Day stats</string>
+    <string name="delete_sure_question">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="no_drinks_today">No drinks today</string>
 </resources>

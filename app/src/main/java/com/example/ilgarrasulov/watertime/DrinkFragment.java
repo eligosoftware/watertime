@@ -67,8 +67,12 @@ public class DrinkFragment extends Fragment {
             public void onClick(View view) {
 
                 List<DrinkGlass> drinkGlasses=databaseQuery.getDrinkGlasses(cal.getTime());
-
-                startActivity(DrinksListActivity.newInstance(drinkGlasses,getActivity()));
+                if(drinkGlasses.size()>0) {
+                    startActivity(DrinksListActivity.newInstance(drinkGlasses, getActivity()));
+                }
+                else {
+                    Toast.makeText(getActivity(), R.string.no_drinks_today,Toast.LENGTH_SHORT).show();
+                }
 
               //  Toast.makeText(getActivity(),"Wow!",Toast.LENGTH_SHORT).show();
             }
