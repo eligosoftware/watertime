@@ -22,6 +22,7 @@ public class DatabaseQuery extends DatabaseObject {
     }
     public static final SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat sdf_full=new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+    public static final SimpleDateFormat sdf_today=new SimpleDateFormat("kk:mm");
 
     private Calendar calendar=Calendar.getInstance(Locale.ENGLISH);
 
@@ -33,7 +34,7 @@ public class DatabaseQuery extends DatabaseObject {
         String query="select "+DBSchema.DrinkTimes.DATE_TIME +", _id"+
 
                 " from "+DBSchema.DrinkTimes.NAME
-                +" where date("+DBSchema.DrinkTimes.DATE_TIME+") = "+dateString
+                +" where date("+DBSchema.DrinkTimes.DATE_TIME+") = '"+dateString+"'"
                 ;
         Cursor cursor= getDBConnection().rawQuery(query,null);
         if (cursor.moveToFirst()){

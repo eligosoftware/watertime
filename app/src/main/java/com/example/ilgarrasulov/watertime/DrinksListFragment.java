@@ -71,7 +71,7 @@ public class DrinksListFragment extends Fragment {
         @Override
         public void onBindViewHolder(DrinkHolder holder, int position) {
             DrinkGlass glass=mGlasses.get(position);
-            holder.mTextView.setText(glass.getGlass_time().toString());
+            holder.mTextView.setText( getResources().getString(R.string.at_str,DatabaseQuery.convertDateToString(glass.getGlass_time(),DatabaseQuery.sdf_today)));
         }
 
         @Override
