@@ -33,13 +33,17 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.calendar_tab,container,false);
 
+
+
         calendarView=(CalendarCustomView)view.findViewById(R.id.custom_calendar);
 
 
 
         mDrinksListRecyclerView=(RecyclerView) view.findViewById(R.id.calendar_tab_day_details);
+
         mDrinksListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        mDrinksListRecyclerView.setNestedScrollingEnabled(false);
 
         Calendar cal=Calendar.getInstance(Locale.ENGLISH);
         mAdapter=new CalendarFragment.DrinksAdapter(new DatabaseQuery(getActivity()).getDrinkGlasses(cal.getTime()));
@@ -75,7 +79,7 @@ public class CalendarFragment extends Fragment {
         public CalendarFragment.DrinkHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             LayoutInflater inflater=LayoutInflater.from(getActivity());
-            View view=inflater.inflate(R.layout.drink_details_single_item, parent,false);
+            View view=inflater.inflate(R.layout.drink_details_single_item_no_delete, parent,false);
             return new CalendarFragment.DrinkHolder(view);
         }
 

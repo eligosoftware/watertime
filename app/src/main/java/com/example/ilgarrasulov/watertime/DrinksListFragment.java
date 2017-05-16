@@ -29,9 +29,16 @@ public class DrinksListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.drink_details_layout,container,false);
 
+//        LinearLayoutManager manager = new LinearLayoutManager(getActivity()){
+//            @Override
+//            public boolean canScrollVertically() {
+//                return false;
+//            }
+//        };
+
         mDrinksListRecyclerView=(RecyclerView) view.findViewById(R.id.drinks_list_recycler_view);
         mDrinksListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        //mDrinksListRecyclerView.setNestedScrollingEnabled(false);
 
 
         mAdapter=new DrinksAdapter((List<DrinkGlass>) getActivity().getIntent().getSerializableExtra("details"));

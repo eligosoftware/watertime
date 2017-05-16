@@ -17,4 +17,5 @@
     <string name="last_date">30</string>
     <string name="today_drinks">Today drinks</string>
     <string name="at_str">At %s</string>
+    <string name="day_stats">Day stats</string>
 </resources>
