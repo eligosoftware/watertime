@@ -28,6 +28,12 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private final int READ_CALENDAR_PERMISIION=8329;
+    private TabLayout tabLayout;
+
+
+    public void updateCalendar(){
+        TabLayout.Tab tab= tabLayout.getTabAt(1);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        TabLayout tabLayout=(TabLayout)findViewById(R.id.tab_layout);
+        tabLayout=(TabLayout)findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("DRINK"));
         tabLayout.addTab(tabLayout.newTab().setText("CALENDAR"));
       //  tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);

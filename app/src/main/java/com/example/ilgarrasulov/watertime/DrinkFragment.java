@@ -120,6 +120,13 @@ public class DrinkFragment extends Fragment {
             }
         }
 
+        ((MainActivity)getActivity()).updateCalendar();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateTodayStats();
+    }
 }
