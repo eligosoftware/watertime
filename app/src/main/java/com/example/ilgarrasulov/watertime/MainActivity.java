@@ -15,6 +15,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,13 +28,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final int READ_CALENDAR_PERMISIION=8329;
-    private TabLayout tabLayout;
 
-
-    public void updateCalendar(){
-        TabLayout.Tab tab= tabLayout.getTabAt(1);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +38,15 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
-
-        tabLayout=(TabLayout)findViewById(R.id.tab_layout);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("DRINK"));
         tabLayout.addTab(tabLayout.newTab().setText("CALENDAR"));
-      //  tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
+        //  tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
 
 
-        final ViewPager viewPager=(ViewPager)findViewById(R.id.tab_pager);
-        final PagerAdapter pagerAdapter=new PagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+       final ViewPager viewPager = (ViewPager) findViewById(R.id.tab_pager);
+        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+
 
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -73,9 +67,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        DatabaseQuery dq=new DatabaseQuery(this);
+        DatabaseQuery dq = new DatabaseQuery(this);
         dq.registerForToday();
 
+    }
 //        String[] permissions = new String[]{
 //        Manifest.permission.READ_CALENDAR,
 //                Manifest.permission.WRITE_CALENDAR};
@@ -102,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 //        else {
 //            checkIt();
 //        }
-    }
+
 
 //    private void checkIt(){
 //        Cursor cur = null;

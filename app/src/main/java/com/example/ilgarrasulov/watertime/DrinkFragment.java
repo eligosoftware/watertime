@@ -118,9 +118,12 @@ public class DrinkFragment extends Fragment {
             if(day.getDay_count()>=day.getSet_count()){
                 wellDone.setVisibility(View.VISIBLE);
             }
+            else
+            {
+                wellDone.setVisibility(View.GONE);
+            }
         }
 
-        ((MainActivity)getActivity()).updateCalendar();
     }
 
 

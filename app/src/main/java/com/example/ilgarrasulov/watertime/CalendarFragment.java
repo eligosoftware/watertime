@@ -25,17 +25,14 @@ public class CalendarFragment extends Fragment {
 
     private RecyclerView mDrinksListRecyclerView;
     private DrinksAdapter mAdapter;
-    private CalendarCustomView calendarView;
+
+
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.calendar_tab,container,false);
-
-
-
-        calendarView=(CalendarCustomView)view.findViewById(R.id.custom_calendar);
 
 
 

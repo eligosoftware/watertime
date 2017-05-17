@@ -25,24 +25,27 @@ import java.util.Locale;
  * Created by ilgarrasulov on 08.05.2017.
  */
 
-public class CalendarCustomView extends LinearLayout {
+public class CalendarCustomView extends LinearLayout{
     private static final String TAG= CalendarCustomView.class.getSimpleName();
     private ImageView previousButton,nextButton;
     private TextView currentDate;
     private GridView calendarGridView;
     private static final int MAX_CALENDAR_COUNT = 42;
-    private int month,year;
     private Context context;
     private Calendar cal= Calendar.getInstance(Locale.ENGLISH);
     private DatabaseQuery mQuery;
     private SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
     private GridAdapter mAdapter;
+    public Calendar tapped_date;
+
 
     public CalendarCustomView(Context context) {
         super(context);
     }
 
     public CalendarCustomView(Context context, @Nullable AttributeSet attrs) {
+
+
         super(context, attrs);
         this.context=context;
         initializeUILayout();
@@ -51,6 +54,7 @@ public class CalendarCustomView extends LinearLayout {
         setNextButtonClickEvent();
         setGridCellClickEvents();
     }
+
 
     public CalendarCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -121,7 +125,7 @@ public class CalendarCustomView extends LinearLayout {
 
                 Calendar cal1= Calendar.getInstance();
                 cal1.setTime((Date)calendarGridView.getAdapter().getItem(position));
-
+                tapped_date=cal1;
 
                 if (cal.get(Calendar.YEAR) == cal1.get(Calendar.YEAR)) {
                     if (cal.get(Calendar.MONTH) < cal1.get(Calendar.MONTH)) {
@@ -151,4 +155,6 @@ public class CalendarCustomView extends LinearLayout {
 
         });
     }
+
+
 }
