@@ -36,7 +36,13 @@ public class CalendarCustomView extends LinearLayout{
     private DatabaseQuery mQuery;
     private SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
     private GridAdapter mAdapter;
-    public Calendar tapped_date;
+
+    public void setCallback(CalendarClick callback) {
+        mCallback = callback;
+    }
+
+    private CalendarClick mCallback;
+
 
 
     public CalendarCustomView(Context context) {
@@ -125,7 +131,7 @@ public class CalendarCustomView extends LinearLayout{
 
                 Calendar cal1= Calendar.getInstance();
                 cal1.setTime((Date)calendarGridView.getAdapter().getItem(position));
-                tapped_date=cal1;
+
 
                 if (cal.get(Calendar.YEAR) == cal1.get(Calendar.YEAR)) {
                     if (cal.get(Calendar.MONTH) < cal1.get(Calendar.MONTH)) {
@@ -150,10 +156,14 @@ public class CalendarCustomView extends LinearLayout{
                         cal.add(Calendar.MONTH, -1);
                         setUpCalendarAdapter(cal1);
                     }
+
+                    mCallback.onDayClicked(cal1);
+
                 }
 
 
         });
+
     }
 
 

@@ -19,7 +19,7 @@ import java.util.Locale;
  * Created by ilgarrasulov on 04.05.2017.
  */
 
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment implements CalendarClick {
 
 
 
@@ -34,7 +34,8 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.calendar_tab,container,false);
 
-
+        CalendarCustomView calendarCustomView=(CalendarCustomView)view.findViewById(R.id.custom_calendar);
+        calendarCustomView.setCallback(this);
 
         mDrinksListRecyclerView=(RecyclerView) view.findViewById(R.id.calendar_tab_day_details);
 
@@ -49,6 +50,11 @@ public class CalendarFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDayClicked(Calendar calendar) {
+        mAdapter=new CalendarFragment.DrinksAdapter(new DatabaseQuery(getActivity()).getDrinkGlasses(calendar.getTime()));
+        mDrinksListRecyclerView.setAdapter(mAdapter);
+    }
 
 
     private class DrinkHolder extends RecyclerView.ViewHolder{
