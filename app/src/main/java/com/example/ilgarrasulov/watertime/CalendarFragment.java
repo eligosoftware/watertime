@@ -3,12 +3,15 @@ package com.example.ilgarrasulov.watertime;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -26,7 +29,7 @@ public class CalendarFragment extends Fragment implements CalendarClick {
     private RecyclerView mDrinksListRecyclerView;
     private DrinksAdapter mAdapter;
 
-
+    private CardView detailsCardView;
 
 
     @Nullable
@@ -47,6 +50,9 @@ public class CalendarFragment extends Fragment implements CalendarClick {
         mAdapter=new CalendarFragment.DrinksAdapter(new DatabaseQuery(getActivity()).getDrinkGlasses(cal.getTime()));
         mDrinksListRecyclerView.setAdapter(mAdapter);
 
+
+        detailsCardView=(CardView)view.findViewById(R.id.calendar_tab_day_details_card_view);
+
         return view;
     }
 
@@ -54,8 +60,15 @@ public class CalendarFragment extends Fragment implements CalendarClick {
     public void onDayClicked(Calendar calendar) {
         mAdapter=new CalendarFragment.DrinksAdapter(new DatabaseQuery(getActivity()).getDrinkGlasses(calendar.getTime()));
         mDrinksListRecyclerView.setAdapter(mAdapter);
+        resizeDetailsCardView();
     }
 
+
+    private void resizeDetailsCardView(){
+        LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) detailsCardView.getLayoutParams();
+                params.height= 70+mAdapter.getItemCount()*40;
+        detailsCardView.setLayoutParams(params);
+    }
 
     private class DrinkHolder extends RecyclerView.ViewHolder{
 

@@ -165,6 +165,7 @@ public class CalendarCustomView extends LinearLayout{
         });
 
     }
-
-
+    public void updateData(){
+        setUpCalendarAdapter(null);
+    }
 }

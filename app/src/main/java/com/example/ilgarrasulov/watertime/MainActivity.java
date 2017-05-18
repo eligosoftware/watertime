@@ -54,8 +54,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 1) {
+                    ((CalendarCustomView)getSupportFragmentManager().getFragments().get(2).getView().findViewById(R.id.custom_calendar)).updateData();
+                }
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
