@@ -25,6 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 1) {
+                    ((CalendarFragment)getSupportFragmentManager().getFragments().get(2)).onDayClicked(Calendar.getInstance(Locale.ENGLISH));
                     ((CalendarCustomView)getSupportFragmentManager().getFragments().get(2).getView().findViewById(R.id.custom_calendar)).updateData();
                 }
             }
