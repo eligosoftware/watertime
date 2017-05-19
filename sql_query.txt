@@ -1,0 +1,7 @@
+select max(dt),count(*) as streak from(
+select t1.dt
+      ,date_sub(t1.dt, INTERVAL (select count(*) from test t2 where t2.dt<=t1.dt) DAY) as grp
+      from test t1
+      ) t
+group by grp
+order by streak desc
