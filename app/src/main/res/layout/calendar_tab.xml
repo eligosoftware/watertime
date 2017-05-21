@@ -26,6 +26,99 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/calendar_tab_max_records_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:visibility="visible"
+        card_view:cardBackgroundColor="#ffffff"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="8dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/max_streak"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:layout_margin="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:id="@+id/max_streak"
+
+                    android:textAppearance="?android:textAppearanceLarge"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_streak"
+                    android:layout_margin="10dp"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceLarge"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:id="@+id/cur_streak"
+                    android:textAppearance="?android:textAppearanceLarge"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/month_streak"
+                    android:layout_margin="10dp"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceLarge"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:id="@+id/month_streak" android:text="month"
+                    android:textAppearance="?android:textAppearanceLarge"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
         android:id="@+id/calendar_tab_day_details_card_view"
         android:layout_width="match_parent"
         android:layout_height="470dp"

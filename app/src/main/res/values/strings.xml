@@ -22,4 +22,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="no_drinks_today">No drinks today</string>
+    <string name="max_streak">Max streak</string>
+    <string name="current_streak">Current streak</string>
+    <string name="month_streak">Month Streak</string>
 </resources>

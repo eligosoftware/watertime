@@ -59,7 +59,7 @@ public class DrinkFragment extends Fragment {
 
         wellDone=(CardView)v.findViewById(R.id.drink_tab_card_view_well_done);
 
-        updateTodayStats();
+        //updateTodayStats();
 
 
         View.OnClickListener listener=new View.OnClickListener() {

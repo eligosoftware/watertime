@@ -123,6 +123,10 @@ public class CalendarCustomView extends LinearLayout{
         }
 
         calendarGridView.setAdapter(mAdapter);
+
+
+
+
     }
     private void setGridCellClickEvents(){
         calendarGridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){

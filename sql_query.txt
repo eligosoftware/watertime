@@ -5,3 +5,11 @@ select t1.dt
       ) t
 group by grp
 order by streak desc
+
+
+select max(dt),count(*) as streak from(
+select t1.dt,
+date(t1.dt, -(select count(*) from test t2 where t2.dt<=t1.dt) ||' day') as grp
+from test t1
+group by grp
+order by streak desc

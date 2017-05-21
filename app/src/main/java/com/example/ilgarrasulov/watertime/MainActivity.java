@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
                 if (tab.getPosition() == 1) {
                     ((CalendarFragment)getSupportFragmentManager().getFragments().get(2)).onDayClicked(Calendar.getInstance(Locale.ENGLISH));
                     ((CalendarCustomView)getSupportFragmentManager().getFragments().get(2).getView().findViewById(R.id.custom_calendar)).updateData();
+                    ((CalendarFragment)getSupportFragmentManager().getFragments().get(2)).updateMaxRecords();
+
                 }
             }
             @Override
