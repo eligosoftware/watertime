@@ -32,7 +32,7 @@ public class CalendarFragment extends Fragment implements CalendarClick {
     private Calendar cal;
     private CardView detailsCardView;
     private TextView no_data_for_day;
-    public TextView max_streak,cur_streak;
+    private TextView max_streak,cur_streak,month_streak;
 
     @Nullable
     @Override
@@ -59,6 +59,7 @@ public class CalendarFragment extends Fragment implements CalendarClick {
 
         max_streak=(TextView)view.findViewById(R.id.max_streak);
         cur_streak=(TextView)view.findViewById(R.id.cur_streak);
+        month_streak=(TextView)view.findViewById(R.id.month_streak);
 
 
         return view;
@@ -75,9 +76,11 @@ public class CalendarFragment extends Fragment implements CalendarClick {
         DatabaseQuery mQuery=new DatabaseQuery(getActivity());
         int max_streak_value =  mQuery.getStreak("max");
         int cur_streak_value = mQuery.getStreak("cur");
+        int month_streak_value = mQuery.getStreak("month");
 
         max_streak.setText(String.valueOf(max_streak_value));
         cur_streak.setText(String.valueOf(cur_streak_value));
+        month_streak.setText(String.valueOf(month_streak_value));
     }
 
 
@@ -91,7 +94,7 @@ public class CalendarFragment extends Fragment implements CalendarClick {
             mDrinksListRecyclerView.setVisibility(View.VISIBLE);
         }
         else {
-            params.height= dpToPx(250);
+            params.height= dpToPx(200);
             no_data_for_day.setVisibility(View.VISIBLE);
             mDrinksListRecyclerView.setVisibility(View.GONE);
         }

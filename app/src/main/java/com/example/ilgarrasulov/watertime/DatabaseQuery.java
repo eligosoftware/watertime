@@ -145,12 +145,16 @@ public class DatabaseQuery extends DatabaseObject {
                 break;
             case "cur":
                 Calendar calendar1= (Calendar) calendar.clone();
+
                 calendar1.add(Calendar.DAY_OF_MONTH,-1);
 
                 query+=" having max(dt)= '"+convertDateToString(calendar1.getTime(),sdf)+"' or '"+ convertDateToString(calendar.getTime(),sdf) +"' order by streak DESC";
                 break;
             case "month":
+                Calendar calendar2= (Calendar) calendar.clone();
+                calendar2.add(Calendar.MONTH,-1);
 
+                query="select 0, count(*) from test where dt between '"+convertDateToString(calendar2.getTime(),sdf)+"' and '"+convertDateToString(calendar.getTime(),sdf)+"'";
             default:
                 break;
 
