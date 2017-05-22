@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="enable_notifications"
+        android:title="enable_notifications_title"
+        />
+    <EditTextPreference
+        android:key="drinks_per_day"
+        android:title="@string/drinks_per_day_title"
+        android:summary="@string/drinks_per_day_description"
+        android:inputType="number"/>
+</PreferenceScreen>
