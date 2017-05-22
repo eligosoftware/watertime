@@ -60,7 +60,7 @@
                     />
 
                 <TextView
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -84,7 +84,7 @@
                     android:textStyle="bold"
                     android:textAppearance="?android:textAppearanceLarge"/>
                 <TextView
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -109,7 +109,7 @@
                     android:textStyle="bold"
                     android:textAppearance="?android:textAppearanceLarge"/>
                 <TextView
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"

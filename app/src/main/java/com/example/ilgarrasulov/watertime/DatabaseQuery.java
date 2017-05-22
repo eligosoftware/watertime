@@ -148,7 +148,7 @@ public class DatabaseQuery extends DatabaseObject {
 
                 calendar1.add(Calendar.DAY_OF_MONTH,-1);
 
-                query+=" having max(dt)= '"+convertDateToString(calendar1.getTime(),sdf)+"' or '"+ convertDateToString(calendar.getTime(),sdf) +"' order by streak DESC";
+                query+=" having max(dt)= '"+convertDateToString(calendar1.getTime(),sdf)+"' or max(dt)= '"+ convertDateToString(calendar.getTime(),sdf) +"' order by streak DESC";
                 break;
             case "month":
                 Calendar calendar2= (Calendar) calendar.clone();
