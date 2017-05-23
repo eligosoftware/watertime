@@ -2,52 +2,83 @@ package com.example.ilgarrasulov.watertime;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.app.FragmentManager;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceGroup;
+import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 
 /**
  * Created by mragl on 22.05.2017.
  */
 
-public class PrefActivity extends PreferenceActivity {
-    PrefFragment mPrefFragment;
+public class PrefActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FragmentManager fm=getFragmentManager();
-        mPrefFragment= new PrefFragment();
-        SharedPreferences sharedPreferences=getSharedPreferences("drinks_per_day",MODE_PRIVATE);
-        mPrefFragment.setUpSummary( sharedPreferences.getString("drinks_per_day",""));
-
-        fm.beginTransaction()
-                .replace(android.R.id.content,mPrefFragment)
-                .commit();
-
+    addPreferencesFromResource(R.xml.preferences);
+        PreferenceManager.setDefaultValues(PrefActivity.this,R.xml.preferences,false);
+        initSummary(getPreferenceScreen());
     }
-//    SharedPreferences.OnSharedPreferenceChangeListener mOnSharedPreferenceChangeListener =new SharedPreferences.OnSharedPreferenceChangeListener() {
-//        @Override
-//        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-//            if (sharedPreferences==getSharedPreferences("drinks_per_day",MODE_PRIVATE)){
-//                mPrefFragment.setUpSummary(s);
-//            }
-//        }
-//    }
 
-
-    public static class PrefFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences);
-
+    private void initSummary(Preference p) {
+        if (p instanceof PreferenceGroup) {
+            PreferenceGroup pGrp = (PreferenceGroup) p;
+            for (int i = 0; i < pGrp.getPreferenceCount(); i++) {
+                initSummary(pGrp.getPreference(i));
+            }
+        } else {
+            updatePrefSummary(p);
         }
-        public void setUpSummary(String value){
-            Preference preference= findPreference("drinks_per_day");
-            preference.setSummary(" . Current = "+value);
+    }
+
+    private void updatePrefSummary(Preference p) {
+        if (p instanceof ListPreference) {
+            ListPreference listPref = (ListPreference) p;
+            p.setSummary(listPref.getEntry());
         }
+
+        if (p instanceof EditTextPreference) {
+            EditTextPreference editTextPref = (EditTextPreference) p;
+            if (p.getTitle().toString().toLowerCase().contains("password"))
+            {
+                p.setSummary("******");
+            } else {
+                p.setSummary(getString(R.string.drinks_per_day_description,editTextPref.getText()));
+            }
+            if(p.getKey().equals("drinks_per_day")) {
+                DatabaseQuery dbquery = new DatabaseQuery(getApplicationContext());
+                dbquery.registerForToday(getApplicationContext());
+            }
+        }
+        if (p instanceof MultiSelectListPreference) {
+            EditTextPreference editTextPref = (EditTextPreference) p;
+            p.setSummary(editTextPref.getText());
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        updatePrefSummary(findPreference(key));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 }

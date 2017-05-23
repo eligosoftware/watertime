@@ -2,6 +2,7 @@ package com.example.ilgarrasulov.watertime;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 
 import java.text.ParseException;
@@ -96,12 +97,14 @@ public class DatabaseQuery extends DatabaseObject {
         return dateString;
     }
 
-    public void registerForToday(){
+    public void registerForToday(Context context){
 
         Cursor c=this.getDBConnection().query(DBSchema.Drinks.NAME,null,"date("+ DBSchema.Drinks.DAY+") = ?",new String[]{convertDateToString(calendar.getTime(),sdf)},null,null,null);
 
-        if(!c.moveToFirst()){
-           insertday(convertDateToString(calendar.getTime(),sdf));
+        if(!c.moveToFirst()) {
+            insertday(context, convertDateToString(calendar.getTime(), sdf),false);
+        }else{
+            insertday(context, convertDateToString(calendar.getTime(), sdf),true);
         }
 
     }
@@ -168,13 +171,30 @@ public class DatabaseQuery extends DatabaseObject {
         return 0;
     }
 
-    public void insertday(String date){
+    public void insertday(Context context,String date,boolean update){
+
+        SharedPreferences prefs = context.getSharedPreferences(context.getPackageName()+"_preferences",Context.MODE_PRIVATE);
+
+        int set_count=0;
+
+        try {
+           set_count= Integer.parseInt(prefs.getString("drinks_per_day", "8"));
+        }
+        catch (Exception ex){
+            set_count=8;
+        }
         ContentValues cv= new ContentValues();
         cv.put(DBSchema.Drinks.DAY,date);
-        cv.put(DBSchema.Drinks.SET_COUNT,8);
+        cv.put(DBSchema.Drinks.SET_COUNT,set_count);
 
+        if(!update)
         this.getDBConnection().insert(DBSchema.Drinks.NAME,null,cv);
+        else {
+            this.getDBConnection().update(DBSchema.Drinks.NAME,cv,"date("+DBSchema.Drinks.DAY+") = ?",new String[]{date});
+        }
     }
+
+
 
     public long insertdayDrink(){
         ContentValues cv= new ContentValues();
@@ -192,9 +212,9 @@ public class DatabaseQuery extends DatabaseObject {
 
     }
 
-    private void test_data(){
+    private void test_data(Context context){
         String day1="2017-01-03";
-        insertday(day1);
+        insertday(context,day1,false);
 
         String day11="2017-01-03 10:05:16";
         insertdayDrink_test(day11);
@@ -215,7 +235,7 @@ public class DatabaseQuery extends DatabaseObject {
 
 
         String day2="2017-01-04";
-        insertday(day2);
+        insertday(context,day2,false);
 
         String day21="2017-01-04 10:05:16";
         insertdayDrink_test(day21);
@@ -235,7 +255,7 @@ public class DatabaseQuery extends DatabaseObject {
         insertdayDrink_test(day28);
 
         String day3="2017-01-05";
-        insertday(day3);
+        insertday(context,day3,false);
 
         String day31="2017-01-05 10:05:16";
         insertdayDrink_test(day31);
@@ -255,7 +275,7 @@ public class DatabaseQuery extends DatabaseObject {
         insertdayDrink_test(day38);
 
         String day4="2017-01-06";  // 4 days
-        insertday(day4);
+        insertday(context,day4,false);
 
         String day41="2017-01-06 10:05:16";
         insertdayDrink_test(day41);
@@ -275,7 +295,7 @@ public class DatabaseQuery extends DatabaseObject {
         insertdayDrink_test(day48);
 
         String day5="2017-01-09";
-        insertday(day5);
+        insertday(context,day5,false);
 
         String day51="2017-01-09 10:05:16";
         insertdayDrink_test(day51);
@@ -295,7 +315,7 @@ public class DatabaseQuery extends DatabaseObject {
         insertdayDrink_test(day58);
 
         String day6="2017-01-10"; //2 days
-        insertday(day6);
+        insertday(context,day6,false);
 
         String day61="2017-01-10 10:05:16";
         insertdayDrink_test(day61);
@@ -315,7 +335,7 @@ public class DatabaseQuery extends DatabaseObject {
         insertdayDrink_test(day68);
 
         String day7="2017-01-20"; //1 day
-        insertday(day7);
+        insertday(context,day7,false);
 
         String day71="2017-01-20 10:05:16";
         insertdayDrink_test(day71);
@@ -335,7 +355,7 @@ public class DatabaseQuery extends DatabaseObject {
         insertdayDrink_test(day78);
 
         String day8="2017-05-17";
-        insertday(day8);
+        insertday(context,day8,false);
 
         String day81="2017-05-17 10:05:16";
         insertdayDrink_test(day81);
@@ -355,7 +375,7 @@ public class DatabaseQuery extends DatabaseObject {
         insertdayDrink_test(day88);
 
         String day9="2017-05-18";
-        insertday(day9);
+        insertday(context,day9,false);
 
         String day91="2017-05-18 10:05:16";
         insertdayDrink_test(day91);
@@ -375,7 +395,7 @@ public class DatabaseQuery extends DatabaseObject {
         insertdayDrink_test(day98);
 
         String day10="2017-05-19";
-        insertday(day10);
+        insertday(context,day10,false);
 
         String day101="2017-05-19 10:05:16";
         insertdayDrink_test(day101);
@@ -395,7 +415,7 @@ public class DatabaseQuery extends DatabaseObject {
         insertdayDrink_test(day108);
 
         String day11_="2017-05-20";
-        insertday(day11_);
+        insertday(context,day11_,false);
 
         String day11_1="2017-05-20 10:05:16";
         insertdayDrink_test(day11_1);

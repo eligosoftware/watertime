@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:key="enable_notifications"
-        android:title="enable_notifications_title"
+        android:title="@string/enable_notifications_title"
         />
     <EditTextPreference
         android:key="drinks_per_day"
