@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <service android:name=".WaterTimeService"/>
         <activity android:name=".DrinksListActivity"/>
         <activity android:name=".PrefActivity"/>
     </application>

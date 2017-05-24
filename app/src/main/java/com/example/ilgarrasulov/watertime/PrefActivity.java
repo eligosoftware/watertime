@@ -63,6 +63,9 @@ public class PrefActivity extends PreferenceActivity implements SharedPreference
             EditTextPreference editTextPref = (EditTextPreference) p;
             p.setSummary(editTextPref.getText());
         }
+        if(p instanceof SwitchPreference){
+            WaterTimeService.setServiceAlarm(getApplicationContext(),((SwitchPreference) p).isChecked());
+        }
     }
 
     @Override

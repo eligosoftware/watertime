@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -31,7 +32,9 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    public static Intent newIntent(Context context){
+        return new Intent(context,MainActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
