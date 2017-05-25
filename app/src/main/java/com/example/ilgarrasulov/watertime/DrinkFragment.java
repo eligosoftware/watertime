@@ -1,7 +1,10 @@
 package com.example.ilgarrasulov.watertime;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,11 +32,11 @@ import java.util.Locale;
 public class DrinkFragment extends Fragment {
    private DatabaseQuery databaseQuery;
     private Calendar cal= Calendar.getInstance(Locale.ENGLISH);
-    private TextView today_stats;
+    private TextView today_stats,next_drink;
     private CardView wellDone;
     private CardView details_group;
     private LinearLayout details_group_layout;
-
+    private CountDownTimer countDownTimer;
 
     @Nullable
     @Override
@@ -56,6 +59,8 @@ public class DrinkFragment extends Fragment {
         View v =inflater.inflate(R.layout.drink_tab,container,false);
 
         today_stats=(TextView)v.findViewById(R.id.drink_tab_card_view_drank_today_text_view_today_stats);
+
+        next_drink=(TextView)v.findViewById(R.id.drink_tab_card_view_drank_today_text_view_next_drink_value);
 
         wellDone=(CardView)v.findViewById(R.id.drink_tab_card_view_well_done);
 
@@ -105,6 +110,14 @@ public class DrinkFragment extends Fragment {
         return v ;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(countDownTimer!=null){
+            countDownTimer.cancel();
+        }
+    }
+
     private void updateTodayStats(){
 
         Date today_start =DatabaseQuery.convertStringToDate(DatabaseQuery.convertDateToString(cal.getTime(),DatabaseQuery.sdf)+" 00:00:00",DatabaseQuery.sdf_full);
@@ -122,6 +135,48 @@ public class DrinkFragment extends Fragment {
             {
                 wellDone.setVisibility(View.GONE);
             }
+        }
+
+        if(countDownTimer!=null){
+            countDownTimer.cancel();
+        }
+
+        boolean isOn=WaterTimeService.isServiceAlarmOn(getActivity());
+        WaterTimeService.setServiceAlarm(getActivity(),false);
+        WaterTimeService.setServiceAlarm(getActivity(),isOn);
+
+        SharedPreferences preferences=getActivity().getSharedPreferences(getActivity().getPackageName()+"_preferences", Context.MODE_PRIVATE);
+
+        String next=preferences.getString("next_notif_time",null);
+
+
+
+        if(next!=null && WaterTimeService.isServiceAlarmOn(getActivity())){
+            Calendar cal2= (Calendar) cal.clone();
+
+            cal2.setTime(DatabaseQuery.convertStringToDate(next,DatabaseQuery.sdf_full));
+
+            long diff=cal2.getTime().getTime()-cal.getTime().getTime();
+
+            countDownTimer=new CountDownTimer(diff,1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    String hours= (int) (millisUntilFinished/(1000*60*60)) < 10 ? "0"+(int) (millisUntilFinished/(1000*60*60)) : String.valueOf((int) (millisUntilFinished/(1000*60*60)));
+                    String minutes= (int) (millisUntilFinished/(1000*60))%60 < 10 ? "0"+(int) (millisUntilFinished/(1000*60))%60: String.valueOf((int) (millisUntilFinished/(1000*60))%60);
+                    String seconds= (int) (millisUntilFinished/(1000))%60 <10 ? "0"+(int) (millisUntilFinished/(1000))%60: String.valueOf((int) (millisUntilFinished/(1000))%60);
+
+                    next_drink.setText(hours+":"+minutes+":"+seconds);
+                }
+
+                @Override
+                public void onFinish() {
+                    ((MainActivity)getActivity()).instantiateUI();
+                }
+            };
+            countDownTimer.start();
+        }
+        else {
+            next_drink.setText("");
         }
 
     }

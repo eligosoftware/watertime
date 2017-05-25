@@ -195,6 +195,42 @@ public class DatabaseQuery extends DatabaseObject {
     }
 
 
+    public int returnMins(Context context){
+
+        int left_for_today=0;
+        Calendar cal=Calendar.getInstance(Locale.ENGLISH);
+        Date today_start =DatabaseQuery.convertStringToDate(DatabaseQuery.convertDateToString(cal.getTime(),DatabaseQuery.sdf)+" 00:00:00",DatabaseQuery.sdf_full);
+        Date today_end =DatabaseQuery.convertStringToDate(DatabaseQuery.convertDateToString(cal.getTime(),DatabaseQuery.sdf)+" 23:59:59",DatabaseQuery.sdf_full);
+
+        Date today_end_21 =DatabaseQuery.convertStringToDate(DatabaseQuery.convertDateToString(cal.getTime(),DatabaseQuery.sdf)+" 21:00:00",DatabaseQuery.sdf_full);
+
+
+        List<CalendarDay> calendarDays =this.getAllDrinks(today_start,today_end);
+
+        if (calendarDays.size()>0) {
+            CalendarDay day = calendarDays.get(0);
+            left_for_today=day.getSet_count()-day.getDay_count();
+        }
+        if (left_for_today==0)
+        {
+            return -1;
+        }
+        else
+        {
+            long diff=today_end_21.getTime()-cal.getTime().getTime();
+            long diff_minutes=diff/(60*1000);
+
+            cal.add(Calendar.MINUTE,(int)diff_minutes/left_for_today);
+
+            SharedPreferences preferences=context.getSharedPreferences(context.getPackageName()+"_preferences",Context.MODE_PRIVATE);
+
+            preferences.edit().putString("next_notif_time",convertDateToString(cal.getTime(),sdf_full)).apply();
+
+            return (int)diff_minutes/left_for_today;
+
+        }
+    }
+
 
     public long insertdayDrink(){
         ContentValues cv= new ContentValues();

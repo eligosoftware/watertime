@@ -6,6 +6,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -36,21 +37,14 @@ public class MainActivity extends AppCompatActivity {
         return new Intent(context,MainActivity.class);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
+    public void instantiateUI(){
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("DRINK"));
         tabLayout.addTab(tabLayout.newTab().setText("CALENDAR"));
         //  tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
 
 
-       final ViewPager viewPager = (ViewPager) findViewById(R.id.tab_pager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.tab_pager);
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
 
@@ -78,8 +72,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        instantiateUI();
+
         DatabaseQuery dq = new DatabaseQuery(this);
         dq.registerForToday(this);
+
+        SharedPreferences prefs= getSharedPreferences(getPackageName()+"_preferences",MODE_PRIVATE);
+        WaterTimeService.setServiceAlarm(this,prefs.getBoolean("enable_notifications",false));
+
 
     }
 

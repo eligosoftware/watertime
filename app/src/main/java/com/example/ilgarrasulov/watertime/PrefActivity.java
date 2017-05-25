@@ -57,6 +57,10 @@ public class PrefActivity extends PreferenceActivity implements SharedPreference
             if(p.getKey().equals("drinks_per_day")) {
                 DatabaseQuery dbquery = new DatabaseQuery(getApplicationContext());
                 dbquery.registerForToday(getApplicationContext());
+
+                SharedPreferences preferences = getSharedPreferences(getPackageName()+"_preferences",MODE_PRIVATE);
+                WaterTimeService.setServiceAlarm(getApplicationContext(),false);
+                WaterTimeService.setServiceAlarm(getApplicationContext(),preferences.getBoolean("enable_notifications",false));
             }
         }
         if (p instanceof MultiSelectListPreference) {

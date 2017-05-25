@@ -36,9 +36,10 @@ public class WaterTimeService extends IntentService {
         Intent i = WaterTimeService.newIntent(context);
         PendingIntent pi=PendingIntent.getService(context,0,i,0);
         AlarmManager alarmManager=(AlarmManager)context.getSystemService(ALARM_SERVICE);
-
+        DatabaseQuery dbQuery=new DatabaseQuery(context);
         if(isOn){
-            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+1*60*1000,1*60*1000,pi);
+            int in=dbQuery.returnMins(context)*60*1000;
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+in,in,pi);
         } else{
             alarmManager.cancel(pi);
             pi.cancel();
@@ -69,6 +70,7 @@ public class WaterTimeService extends IntentService {
                 .setContentIntent(pi)
                 .setAutoCancel(true)
                 .setLights(Color.GREEN,500,500)
+                .setSound(alarm_sount)
                 .build();
 
         NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(this);

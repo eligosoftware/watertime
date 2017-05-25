@@ -138,53 +138,51 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/drink_tab_card_view_drank_today_text_view_next_drink_header"
                 android:textStyle="bold"
+                android:id="@+id/drink_tab_card_view_drank_today_text_view_next_drink_header"
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="05:06:40"/>
-
+                android:text="Next drink in"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/drink_tab_card_view_drank_today_text_view_next_drink"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_below="@id/drink_tab_card_view_drank_today_text_view_next_drink_header"
+                android:id="@+id/drink_tab_card_view_drank_today_text_view_next_drink_value"
+                android:textStyle="normal"
                 android:textAlignment="center"
-                android:text="until next timer"
-                />
-            <LinearLayout
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/drink_tab_card_view_drank_today_text_view_next_drink"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:id="@+id/drink_tab_card_view_next_drink_buttons"
-                >
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_below="@id/drink_tab_card_view_drank_today_text_view_next_drink_header"/>
+            <!--<LinearLayout-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/drink_tab_card_view_drank_today_text_view_next_drink_header"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:gravity="center"-->
+                <!--android:id="@+id/drink_tab_card_view_next_drink_buttons"-->
+                <!--&gt;-->
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/button_snooze"
-                    android:text="Snooze"
+                <!--<Button-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/button_snooze"-->
+                    <!--android:text="Snooze"-->
 
-                    />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/button_reschedule"
-                    android:text="Reschedule"
-                    />
-            </LinearLayout>
+                    <!--/>-->
+                <!--<Button-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/button_reschedule"-->
+                    <!--android:text="Reschedule"-->
+                    <!--/>-->
+            <!--</LinearLayout>-->
 
-            <TextView
-                style="@style/Base.Animation.AppCompat.DropDownUp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/drink_tab_card_view_next_drink_buttons"
-                android:text="Hint: tap on card to renew time"
-                android:textAlignment="center" />
+            <!--<TextView-->
+                <!--style="@style/Base.Animation.AppCompat.DropDownUp"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/drink_tab_card_view_drank_today_text_view_next_drink_header"-->
+                <!--android:text="Hint: tap on card to renew time"-->
+                <!--android:textAlignment="center" />-->
         </RelativeLayout>
             </android.support.v7.widget.CardView>
 
