@@ -141,9 +141,9 @@ public class DrinkFragment extends Fragment {
             countDownTimer.cancel();
         }
 
-        boolean isOn=WaterTimeService.isServiceAlarmOn(getActivity());
-        WaterTimeService.setServiceAlarm(getActivity(),false);
-        WaterTimeService.setServiceAlarm(getActivity(),isOn);
+//        boolean isOn=WaterTimeService.isServiceAlarmOn(getActivity());
+//        WaterTimeService.setServiceAlarm(getActivity(),false);
+//        WaterTimeService.setServiceAlarm(getActivity(),isOn);
 
         SharedPreferences preferences=getActivity().getSharedPreferences(getActivity().getPackageName()+"_preferences", Context.MODE_PRIVATE);
 

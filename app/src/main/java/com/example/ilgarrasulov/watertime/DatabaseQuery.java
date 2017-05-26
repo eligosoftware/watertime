@@ -109,6 +109,14 @@ public class DatabaseQuery extends DatabaseObject {
 
     }
 
+    public boolean registeredForToday(Context context){
+
+        Cursor c=this.getDBConnection().query(DBSchema.Drinks.NAME,null,"date("+ DBSchema.Drinks.DAY+") = ?",new String[]{convertDateToString(calendar.getTime(),sdf)},null,null,null);
+
+        return c.moveToFirst();
+    }
+
+
     public void delete(String tableName,String whereClause){
         this.getDBConnection().delete(tableName,whereClause,null);
     }
