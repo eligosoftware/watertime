@@ -151,6 +151,7 @@
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_below="@id/drink_tab_card_view_drank_today_text_view_next_drink_header"/>
+
             <!--<LinearLayout-->
                 <!--android:layout_margin="10dp"-->
                 <!--android:layout_width="match_parent"-->

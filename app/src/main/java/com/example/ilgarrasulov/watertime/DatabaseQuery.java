@@ -219,7 +219,7 @@ public class DatabaseQuery extends DatabaseObject {
             CalendarDay day = calendarDays.get(0);
             left_for_today=day.getSet_count()-day.getDay_count();
         }
-        if (left_for_today==0)
+        if (left_for_today<=0)
         {
             return -1;
         }

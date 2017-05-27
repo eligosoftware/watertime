@@ -91,6 +91,7 @@ public class DrinksListFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dbquery.delete(DBSchema.DrinkTimes.NAME,"_id = "+_id);
+                        mAdapter.was_deletion=true;
                         update();
                     }
                 }).setNegativeButton(getString(R.string.no),null);
@@ -102,6 +103,7 @@ public class DrinksListFragment extends Fragment {
     private class DrinksAdapter extends RecyclerView.Adapter<DrinkHolder>{
 
         private List<DrinkGlass> mGlasses;
+        public boolean was_deletion;
 
         private void setGlasses(List<DrinkGlass> Glasses){
             mGlasses=Glasses;
@@ -131,4 +133,13 @@ public class DrinksListFragment extends Fragment {
             return mGlasses.size();
         }
     }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(mAdapter.was_deletion){
+        ((MainApplication)getActivity().getApplication()).rescheduleTime();}
+    }
+
 }

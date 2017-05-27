@@ -97,6 +97,8 @@ public class DrinkFragment extends Fragment {
                 final Long id=databaseQuery.insertdayDrink();
                 updateTodayStats();
 
+                ((MainApplication)getActivity().getApplication()).rescheduleTime();
+
                 Snackbar.make(view, "1 glass added", Snackbar.LENGTH_LONG)
                         .setAction("Undo", new View.OnClickListener() {
                             @Override
@@ -109,6 +111,8 @@ public class DrinkFragment extends Fragment {
         });
         return v ;
     }
+
+
 
     @Override
     public void onPause() {
@@ -150,7 +154,6 @@ public class DrinkFragment extends Fragment {
         String next=preferences.getString("next_notif_time",null);
 
 
-
         if(next!=null && WaterTimeService.isServiceAlarmOn(getActivity())){
             Calendar cal2= (Calendar) cal.clone();
 
@@ -185,6 +188,7 @@ public class DrinkFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        cal=Calendar.getInstance(Locale.ENGLISH);
         updateTodayStats();
     }
 }

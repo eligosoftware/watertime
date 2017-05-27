@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         return new Intent(context,MainActivity.class);
     }
 
+
+
     public void instantiateUI(){
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("DRINK"));
