@@ -20,10 +20,13 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Created by ilgarrasulov on 04.05.2017.
@@ -32,7 +35,7 @@ import java.util.Locale;
 public class DrinkFragment extends Fragment {
    private DatabaseQuery databaseQuery;
     private Calendar cal= Calendar.getInstance(Locale.ENGLISH);
-    private TextView today_stats,next_drink;
+    private TextView today_stats;
     private CardView wellDone;
     private CardView details_group;
     private LinearLayout details_group_layout;
@@ -43,24 +46,12 @@ public class DrinkFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-//        DatabaseQuery q=new DatabaseQuery(getActivity());
-//        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-//        Date d=new Date();
-//       q.insertday(df.format(d));
-////        q.delete();
-//        q.getAllDrinks();
-
-        // List<Date> dayValueInCells=new ArrayList<Date>();
-//        Calendar mCal=(Calendar)cal.clone();
-//        mCal.set(Calendar.DAY_OF_MONTH,1);
-
         databaseQuery=new DatabaseQuery(getActivity());
 
         View v =inflater.inflate(R.layout.drink_tab,container,false);
 
         today_stats=(TextView)v.findViewById(R.id.drink_tab_card_view_drank_today_text_view_today_stats);
 
-        next_drink=(TextView)v.findViewById(R.id.drink_tab_card_view_drank_today_text_view_next_drink_value);
 
         wellDone=(CardView)v.findViewById(R.id.drink_tab_card_view_well_done);
 
@@ -95,6 +86,7 @@ public class DrinkFragment extends Fragment {
             public void onClick(View view) {
 
                 final Long id=databaseQuery.insertdayDrink();
+
                 updateTodayStats();
 
                 ((MainApplication)getActivity().getApplication()).rescheduleTime();
@@ -141,46 +133,44 @@ public class DrinkFragment extends Fragment {
             }
         }
 
-        if(countDownTimer!=null){
-            countDownTimer.cancel();
-        }
+//        if(countDownTimer!=null){
+//            countDownTimer.cancel();
+//        }
 
 //        boolean isOn=WaterTimeService.isServiceAlarmOn(getActivity());
 //        WaterTimeService.setServiceAlarm(getActivity(),false);
 //        WaterTimeService.setServiceAlarm(getActivity(),isOn);
 
-        SharedPreferences preferences=getActivity().getSharedPreferences(getActivity().getPackageName()+"_preferences", Context.MODE_PRIVATE);
 
-        String next=preferences.getString("next_notif_time",null);
-
-
-        if(next!=null && WaterTimeService.isServiceAlarmOn(getActivity())){
-            Calendar cal2= (Calendar) cal.clone();
-
-            cal2.setTime(DatabaseQuery.convertStringToDate(next,DatabaseQuery.sdf_full));
-
-            long diff=cal2.getTime().getTime()-cal.getTime().getTime();
-
-            countDownTimer=new CountDownTimer(diff,1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    String hours= (int) (millisUntilFinished/(1000*60*60)) < 10 ? "0"+(int) (millisUntilFinished/(1000*60*60)) : String.valueOf((int) (millisUntilFinished/(1000*60*60)));
-                    String minutes= (int) (millisUntilFinished/(1000*60))%60 < 10 ? "0"+(int) (millisUntilFinished/(1000*60))%60: String.valueOf((int) (millisUntilFinished/(1000*60))%60);
-                    String seconds= (int) (millisUntilFinished/(1000))%60 <10 ? "0"+(int) (millisUntilFinished/(1000))%60: String.valueOf((int) (millisUntilFinished/(1000))%60);
-
-                    next_drink.setText(hours+":"+minutes+":"+seconds);
-                }
-
-                @Override
-                public void onFinish() {
-                    ((MainActivity)getActivity()).instantiateUI();
-                }
-            };
-            countDownTimer.start();
-        }
-        else {
-            next_drink.setText("");
-        }
+//        Calendar cal2= (Calendar) cal.clone();
+//        cal2.add(Calendar.HOUR,databaseQuery.returnMins(getActivity()));
+//        String next=DatabaseQuery.convertDateToString(cal2.getTime(),DatabaseQuery.sdf_full);
+//
+//        if(next!=null && WaterTimeService.isServiceAlarmOn(getActivity())){
+//
+//
+//            long diff=cal2.getTime().getTime()-cal.getTime().getTime();
+//
+//            countDownTimer=new CountDownTimer(diff,1000) {
+//                @Override
+//                public void onTick(long millisUntilFinished) {
+//                    String hours= (int) (millisUntilFinished/(1000*60*60)) < 10 ? "0"+(int) (millisUntilFinished/(1000*60*60)) : String.valueOf((int) (millisUntilFinished/(1000*60*60)));
+//                    String minutes= (int) (millisUntilFinished/(1000*60))%60 < 10 ? "0"+(int) (millisUntilFinished/(1000*60))%60: String.valueOf((int) (millisUntilFinished/(1000*60))%60);
+//                    String seconds= (int) (millisUntilFinished/(1000))%60 <10 ? "0"+(int) (millisUntilFinished/(1000))%60: String.valueOf((int) (millisUntilFinished/(1000))%60);
+//
+//                    next_drink.setText(hours+":"+minutes+":"+seconds);
+//                }
+//
+//                @Override
+//                public void onFinish() {
+//                    ((MainActivity)getActivity()).instantiateUI();
+//                }
+//            };
+//            countDownTimer.start();
+//        }
+//        else {
+//            next_drink.setText("");
+//        }
 
     }
 

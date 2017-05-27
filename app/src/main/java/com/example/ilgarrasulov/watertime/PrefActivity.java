@@ -51,12 +51,13 @@ public class PrefActivity extends PreferenceActivity implements SharedPreference
             if (p.getTitle().toString().toLowerCase().contains("password"))
             {
                 p.setSummary("******");
-            } else {
+            } else if(p.getKey()=="drinks_per_day"){
                 p.setSummary(getString(R.string.drinks_per_day_description,editTextPref.getText()));
             }
             if(p.getKey().equals("drinks_per_day")) {
                 DatabaseQuery dbquery = new DatabaseQuery(getApplicationContext());
                 dbquery.registerForToday(getApplicationContext());
+
 
                 SharedPreferences preferences = getSharedPreferences(getPackageName()+"_preferences",MODE_PRIVATE);
                 WaterTimeService.setServiceAlarm(getApplicationContext(),false);
@@ -68,6 +69,7 @@ public class PrefActivity extends PreferenceActivity implements SharedPreference
             p.setSummary(editTextPref.getText());
         }
         if(p instanceof SwitchPreference){
+
             WaterTimeService.setServiceAlarm(getApplicationContext(),((SwitchPreference) p).isChecked());
         }
     }

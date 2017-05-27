@@ -128,29 +128,6 @@
         card_view:cardElevation="8dp"
         android:layout_below="@id/drink_tab_card_view_drank_today">
 
-        <RelativeLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:id="@+id/drink_tab_card_view_drank_today_text_view_next_drink_header"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Next drink in"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/drink_tab_card_view_drank_today_text_view_next_drink_value"
-                android:textStyle="normal"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_below="@id/drink_tab_card_view_drank_today_text_view_next_drink_header"/>
 
             <!--<LinearLayout-->
                 <!--android:layout_margin="10dp"-->
@@ -184,7 +161,6 @@
                 <!--android:layout_below="@id/drink_tab_card_view_drank_today_text_view_next_drink_header"-->
                 <!--android:text="Hint: tap on card to renew time"-->
                 <!--android:textAlignment="center" />-->
-        </RelativeLayout>
             </android.support.v7.widget.CardView>
 
     <android.support.design.widget.FloatingActionButton

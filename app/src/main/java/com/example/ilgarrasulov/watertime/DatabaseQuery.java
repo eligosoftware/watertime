@@ -4,14 +4,19 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.util.ArraySet;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by ilgarrasulov on 10.05.2017.
@@ -123,9 +128,6 @@ public class DatabaseQuery extends DatabaseObject {
 
     public int getStreak(String type){
 
-//        delete(DBSchema.DrinkTimes.NAME,null);
-//        delete(DBSchema.Drinks.NAME,null);
-//        test_data();
         this.getDBConnection().execSQL("drop table if exists test");
         String temp_db_query="create temporary table test as select "+DBSchema.Drinks.DAY+" as dt from (select "+DBSchema.Drinks.DAY +", "+DBSchema.Drinks.SET_COUNT +", day_count, "+
                 "case when "+DBSchema.Drinks.SET_COUNT+" <= day_count then 'success' else 'failed' end as result"
@@ -202,42 +204,78 @@ public class DatabaseQuery extends DatabaseObject {
         }
     }
 
-
-    public int returnMins(Context context){
-
-        int left_for_today=0;
-        Calendar cal=Calendar.getInstance(Locale.ENGLISH);
-        Date today_start =DatabaseQuery.convertStringToDate(DatabaseQuery.convertDateToString(cal.getTime(),DatabaseQuery.sdf)+" 00:00:00",DatabaseQuery.sdf_full);
-        Date today_end =DatabaseQuery.convertStringToDate(DatabaseQuery.convertDateToString(cal.getTime(),DatabaseQuery.sdf)+" 23:59:59",DatabaseQuery.sdf_full);
-
-        Date today_end_21 =DatabaseQuery.convertStringToDate(DatabaseQuery.convertDateToString(cal.getTime(),DatabaseQuery.sdf)+" 21:00:00",DatabaseQuery.sdf_full);
-
-
-        List<CalendarDay> calendarDays =this.getAllDrinks(today_start,today_end);
-
-        if (calendarDays.size()>0) {
-            CalendarDay day = calendarDays.get(0);
-            left_for_today=day.getSet_count()-day.getDay_count();
-        }
-        if (left_for_today<=0)
-        {
-            return -1;
-        }
-        else
-        {
-            long diff=today_end_21.getTime()-cal.getTime().getTime();
-            long diff_minutes=diff/(60*1000);
-
-            cal.add(Calendar.MINUTE,(int)diff_minutes/left_for_today);
-
-            SharedPreferences preferences=context.getSharedPreferences(context.getPackageName()+"_preferences",Context.MODE_PRIVATE);
-
-            preferences.edit().putString("next_notif_time",convertDateToString(cal.getTime(),sdf_full)).apply();
-
-            return (int)diff_minutes/left_for_today;
-
-        }
+    public int returnMins(Context context) {
+        SharedPreferences preferences=context.getSharedPreferences(context.getPackageName()+"_preferences",Context.MODE_PRIVATE);
+       return Integer.valueOf(preferences.getString("notify_every_hours","2"));
     }
+
+//    public long returnMins(Context context){
+//        SharedPreferences preferences=context.getSharedPreferences(context.getPackageName()+"_preferences",Context.MODE_PRIVATE);
+//
+//        Set<String> set =preferences.getStringSet("next_notif_time",null);
+//
+//        if(set==null){
+//            return -1;
+//        }
+//        else {
+//            if(set.iterator().hasNext()){
+//               String next_date= set.iterator().next();
+//                Date next_date_d=convertStringToDate(next_date,sdf_full);
+//                Calendar cal=Calendar.getInstance(Locale.ENGLISH);
+//
+//                return next_date_d.getTime()-cal.getTime().getTime();
+//            }
+//            else {
+//                return -1;
+//            }
+//        }
+//
+//    }
+//
+//    public void setTimesSet(Context context){
+//
+//        int left_for_today=0;
+//        Calendar cal=Calendar.getInstance(Locale.ENGLISH);
+//        Date today_start =DatabaseQuery.convertStringToDate(DatabaseQuery.convertDateToString(cal.getTime(),DatabaseQuery.sdf)+" 00:00:00",DatabaseQuery.sdf_full);
+//        Date today_end =DatabaseQuery.convertStringToDate(DatabaseQuery.convertDateToString(cal.getTime(),DatabaseQuery.sdf)+" 23:59:59",DatabaseQuery.sdf_full);
+//
+//        Date today_end_21 =DatabaseQuery.convertStringToDate(DatabaseQuery.convertDateToString(cal.getTime(),DatabaseQuery.sdf)+" 21:00:00",DatabaseQuery.sdf_full);
+//
+//
+//        List<CalendarDay> calendarDays =this.getAllDrinks(today_start,today_end);
+//
+//        if (calendarDays.size()>0) {
+//            CalendarDay day = calendarDays.get(0);
+//            left_for_today=day.getSet_count()-day.getDay_count();
+//        }
+//        if (left_for_today<=0)
+//        {
+//            return ;
+//        }
+//        else
+//        {
+//            long diff=today_end_21.getTime()-cal.getTime().getTime();
+//            long diff_minutes=diff/(60*1000);
+//
+//
+//            LinkedList<String> in_day_times=new LinkedList<String>();
+//
+//            while (true){
+//                cal.add(Calendar.MINUTE,(int)diff_minutes/left_for_today);
+//                if(cal.getTime().getTime()>today_end_21.getTime()){
+//                    break;
+//                }
+//                in_day_times.add(convertDateToString(cal.getTime(),sdf_full));
+//            }
+//            Set<String> set=new TreeSet<>();
+//            set.addAll(in_day_times);
+//
+//
+//            SharedPreferences preferences=context.getSharedPreferences(context.getPackageName()+"_preferences",Context.MODE_PRIVATE);
+//
+//            preferences.edit().putStringSet("next_notif_time",set).apply();  // String("next_notif_time",convertDateToString(cal.getTime(),sdf_full)).apply();
+//        }
+//    }
 
 
     public long insertdayDrink(){

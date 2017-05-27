@@ -5,7 +5,13 @@
         android:title="@string/enable_notifications_title"
         />
     <EditTextPreference
+        android:key="notify_every_hours"
+        android:title="@string/notify_every_hours"
+        android:inputType="number"
+        android:dependency="enable_notifications"/>
+    <EditTextPreference
         android:key="drinks_per_day"
+        android:defaultValue="2"
         android:title="@string/drinks_per_day_title"
         android:summary="@string/drinks_per_day_description"
         android:inputType="number"/>
