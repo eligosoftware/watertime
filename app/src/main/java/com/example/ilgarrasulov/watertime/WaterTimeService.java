@@ -40,7 +40,7 @@ public class WaterTimeService extends IntentService {
         if(isOn){
             int in = dbQuery.returnMins(context);
 
-            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + in * 60 * 1000, in * 60 * 1000, pi);
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + in * 60 * 60 * 1000, in * 60 * 60 * 1000, pi);
 
         } else{
             alarmManager.cancel(pi);
